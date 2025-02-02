@@ -1,0 +1,27 @@
+{
+  "name": "@orsted/commands",
+  "version": "0.1.0",
+  "imports": {
+    "@std/path": "jsr:@std/path@^1.0.8"
+  },
+  "exports": "./index.ts",
+  "lint": {
+    "include": ["**/*.ts"],
+    "exclude": [],
+    "rules": {
+      "tags": ["recommended"],
+      "include": [],
+      "exclude": []
+    }
+  },
+  "fmt": {
+    "useTabs": false,
+    "lineWidth": 80,
+    "indentWidth": 4,
+    "semiColons": true,
+    "singleQuote": true,
+    "proseWrap": "preserve",
+    "include": ["**/*.ts"],
+	"exclude": []
+  }
+}

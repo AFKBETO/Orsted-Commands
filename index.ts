@@ -1,6 +1,7 @@
 import * as path from '@std/path';
 import { ICommand } from './interfaces/ICommand.ts';
 import { isICommand } from './utils/isICommand.ts';
+import * as channels from './config/channels.ts';
 
 const commands: ICommand[] = [];
 const foldersPath = path.join(import.meta.dirname || '.', 'commands');
@@ -35,4 +36,4 @@ for (const folder of commandFolders) {
     }
 }
 
-export { commands };
+export { commands, channels };
