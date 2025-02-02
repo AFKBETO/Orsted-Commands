@@ -23,7 +23,7 @@ for (const folder of commandFolders) {
             continue;
         }
         const filePath = path.join(commandsPath, file.name);
-		const fileUrl = path.toFileUrl(filePath);
+        const fileUrl = path.toFileUrl(filePath);
         const command = (await import(fileUrl.toString())).default;
 
         if (isICommand(command)) {
@@ -36,4 +36,4 @@ for (const folder of commandFolders) {
     }
 }
 
-export { commands, channels };
+export { channels, commands };
