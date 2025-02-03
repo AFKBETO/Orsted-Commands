@@ -3,10 +3,10 @@ import {
     SlashCommandBuilder,
     TextChannel,
 } from 'discord.js';
-import { ICommand } from '../../interfaces/ICommand.ts';
+import { BotCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
 
-const chatMsg: ICommand = {
+const chatMsg: BotCommand = {
     cooldown: 5,
     data: new SlashCommandBuilder()
         .setName(setCommandName('chat'))

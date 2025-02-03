@@ -1,9 +1,8 @@
 import * as path from '@std/path';
-import { ICommand } from './interfaces/ICommand.ts';
-import { isICommand } from './utils/isICommand.ts';
+import { BotCommand, Utils } from '@orsted/utils';
 import * as channels from './config/channels.ts';
 
-const commands: ICommand[] = [];
+const commands: BotCommand[] = [];
 const foldersPath = path.join(import.meta.dirname || '.', 'commands');
 const commandFolders = Deno.readDirSync(foldersPath);
 
@@ -26,7 +25,7 @@ for (const folder of commandFolders) {
         const fileUrl = path.toFileUrl(filePath);
         const command = (await import(fileUrl.toString())).default;
 
-        if (isICommand(command)) {
+        if (Utils.isBotCommand(command)) {
             commands.push(command);
         } else {
             console.info(
