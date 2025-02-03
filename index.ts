@@ -1,8 +1,9 @@
 import * as path from '@std/path';
 import { BotCommand, Utils } from '@orsted/utils';
 import * as channels from './config/channels.ts';
+import { Collection } from 'discord.js';
 
-const commands: BotCommand[] = [];
+const commands = new Collection<string, BotCommand>();
 const foldersPath = path.join(import.meta.dirname || '.', 'commands');
 const commandFolders = Deno.readDirSync(foldersPath);
 
@@ -26,7 +27,7 @@ for (const folder of commandFolders) {
         const command = (await import(fileUrl.toString())).default;
 
         if (Utils.isBotCommand(command)) {
-            commands.push(command);
+            commands.set(command.data.name, command);
         } else {
             console.info(
                 `Skipping ${file.name} as it does not implement ICommand: Missing required "data" or "execute" properties.`,
