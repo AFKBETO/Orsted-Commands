@@ -5,6 +5,7 @@ import {
 } from 'discord.js';
 import { BotCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
+import { CommandInteraction } from 'discord.js';
 
 const chatMsg: BotCommand = {
     cooldown: 5,
@@ -22,8 +23,8 @@ const chatMsg: BotCommand = {
                 .setName('quoteid')
                 .setDescription('The ID of the message to quote.')
         )
-        .setDefaultMemberPermissions(0),
-    execute: async (interaction) => {
+        .setDefaultMemberPermissions(0) as SlashCommandBuilder,
+    execute: async (interaction: CommandInteraction) => {
         try {
             await interaction.reply({
                 ephemeral: true,
