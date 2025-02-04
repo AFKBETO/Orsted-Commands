@@ -1,6 +1,7 @@
 import * as path from '@std/path';
 import { BotCommand, Utils } from '@orsted/utils';
 import * as channels from './config/channels.ts';
+export { connectDatabase } from './database/connectDatabase.ts';
 import { Collection } from 'discord.js';
 
 const commands = new Collection<string, BotCommand>();
