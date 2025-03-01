@@ -1,10 +1,20 @@
 import * as path from '@std/path';
-import { BotCommand, Utils } from '@orsted/utils';
+import {
+    MessageContextMenuCommand,
+    SlashCommand,
+    UserContextMenuCommand,
+    Utils,
+} from '@orsted/utils';
 import * as channels from './config/channels.ts';
 export { connectDatabase } from './database/connectDatabase.ts';
 import { Collection } from 'discord.js';
 
-const commands = new Collection<string, BotCommand>();
+const slashCommands = new Collection<string, SlashCommand>();
+const messageContextCommands = new Collection<
+    string,
+    MessageContextMenuCommand
+>();
+const userContextCommands = new Collection<string, UserContextMenuCommand>();
 const foldersPath = path.join(import.meta.dirname || '.', 'commands');
 const commandFolders = Deno.readDirSync(foldersPath);
 
@@ -27,8 +37,12 @@ for (const folder of commandFolders) {
         const fileUrl = path.toFileUrl(filePath);
         const command = (await import(fileUrl.toString())).default;
 
-        if (Utils.isBotCommand(command)) {
-            commands.set(command.data.name, command);
+        if (Utils.isSlashCommand(command)) {
+            slashCommands.set(command.data.name, command);
+        } else if (Utils.isUserContextMenuCommand(command)) {
+            userContextCommands.set(command.data.name, command);
+        } else if (Utils.isMessageContextMenuCommand(command)) {
+            messageContextCommands.set(command.data.name, command);
         } else {
             console.info(
                 `Skipping ${file.name} as it does not implement ICommand: Missing required "data" or "execute" properties.`,
@@ -37,4 +51,4 @@ for (const folder of commandFolders) {
     }
 }
 
-export { channels, commands };
+export { channels, messageContextCommands, slashCommands, userContextCommands };
