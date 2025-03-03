@@ -6,7 +6,6 @@ import {
     Utils,
 } from '@orsted/utils';
 import * as channels from './config/channels.ts';
-export { connectDatabase } from './database/connectDatabase.ts';
 import { Collection } from 'discord.js';
 
 const slashCommands = new Collection<string, SlashCommand>();
