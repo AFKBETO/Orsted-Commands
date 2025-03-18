@@ -91,7 +91,7 @@ const donut: SlashCommand = {
                 await interaction.editReply({ embeds: [msgEmbed] });
             }
         } catch (error) {
-            console.error(new Date(Date.now()), 'donut');
+            console.error(new Date(), 'donut');
             console.error(error);
         }
     },
