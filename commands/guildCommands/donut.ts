@@ -17,7 +17,7 @@ const donutImage =
 
 const donut: SlashCommand = {
     data: new SlashCommandBuilder()
-		.setName(setCommandName('donut'))
+        .setName(setCommandName('donut'))
         .setDescription('Call Papa Orsted to donut somebody (default 10s)')
         .addUserOption((option) =>
             option.setName('target').setDescription('Select a user to donut')
