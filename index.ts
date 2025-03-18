@@ -18,7 +18,12 @@ const foldersPath = path.join(import.meta.dirname || '.', 'commands');
 const commandFolders = Deno.readDirSync(foldersPath);
 
 for (const folder of commandFolders) {
-    if (!folder.isDirectory) continue;
+    if (!folder.isDirectory) {
+        continue;
+    }
+    if (folder.name.startsWith('_')) {
+        continue;
+    }
     const commandsPath = path.join(foldersPath, folder.name);
     const commandFiles = Deno.readDirSync(commandsPath);
     for (const file of commandFiles) {
