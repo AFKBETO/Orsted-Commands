@@ -44,7 +44,7 @@ for (const folder of commandFolders) {
             messageContextCommands.set(command.data.name, command);
         } else {
             console.info(
-                `Skipping ${file.name} as it does not implement ICommand: Missing required "data" or "execute" properties.`,
+                `Skipping ${file.name} as it does not implement BotCommand: Missing required "data" or "execute" properties.`,
             );
         }
     }
