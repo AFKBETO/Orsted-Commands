@@ -3,6 +3,7 @@ import {
     ApplicationCommandType,
     ContextMenuCommandBuilder,
     GuildMember,
+    MessageFlags,
     PermissionFlagsBits,
     Role,
     TextChannel,
@@ -20,8 +21,7 @@ const authorize: UserContextMenuCommand = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles),
     execute: async (interaction: UserContextMenuCommandInteraction) => {
         try {
-            await interaction.deferReply({ ephemeral: true });
-
+            await interaction.deferReply({ flags: MessageFlags.Ephemeral });
             const target = interaction.targetMember as GuildMember;
             const authorizeRole = interaction.guild?.roles.cache.find((role) =>
                 role.name === 'Sauce Connoisseurs'

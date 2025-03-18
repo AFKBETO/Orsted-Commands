@@ -1,5 +1,6 @@
 import {
     CommandInteractionOptionResolver,
+    MessageFlags,
     SlashCommandBuilder,
     TextChannel,
 } from 'discord.js';
@@ -27,7 +28,7 @@ const chatMsg: SlashCommand = {
     execute: async (interaction: CommandInteraction) => {
         try {
             await interaction.reply({
-                ephemeral: true,
+                flags: MessageFlags.Ephemeral,
                 content: 'The message has been sent.',
             });
             const message =
