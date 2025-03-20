@@ -29,7 +29,5 @@ export function randomName(gender: 'any' | 'male' | 'female' = 'any') {
     const isRandomGenderMale = gender === 'any' &&
         Math.floor(Math.random() * 10) !== 0;
     const genderIndex = (isRandomGenderMale || gender === 'male') ? 1 : 0;
-    return randName[genderIndex][
-        Math.floor(Math.random() * randName[genderIndex].length)
-    ];
+    return randName[genderIndex].randomItem();
 }
