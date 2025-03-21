@@ -7,6 +7,7 @@ import {
 } from '@orsted/utils';
 import * as channels from './config/channels.ts';
 import { Collection } from 'discord.js';
+import { generateAnimeCommands } from './commands/guildCommands/_animeCmds.ts';
 
 const slashCommands = new Collection<string, SlashCommand>();
 const messageContextCommands = new Collection<
@@ -55,4 +56,10 @@ for (const folder of commandFolders) {
     }
 }
 
-export { channels, messageContextCommands, slashCommands, userContextCommands };
+export {
+    channels,
+    generateAnimeCommands,
+    messageContextCommands,
+    slashCommands,
+    userContextCommands,
+};
