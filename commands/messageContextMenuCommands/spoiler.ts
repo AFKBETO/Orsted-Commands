@@ -46,9 +46,7 @@ const spoiler: MessageContextMenuCommand = {
                         .setTimestamp(targetMessage.createdTimestamp),
                 );
             }
-            const content = isValidURL(targetMessage.content)
-                ? spoilerContent
-                : undefined;
+            const content = isURL ? spoilerContent : undefined;
             if (!content && embeds.length === 0 && files.length === 0) {
                 await interaction.editReply(
                     'The targeted message is empty or contains only embeds',
