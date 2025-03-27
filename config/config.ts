@@ -1,3 +1,3 @@
 export const config = {
-    environment: Deno.env.get('ENVIRONMENT') || 'development',
+    environment: Deno.env.get('ORSTED_ENVIRONMENT') || 'development',
 };
