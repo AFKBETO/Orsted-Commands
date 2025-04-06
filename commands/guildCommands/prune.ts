@@ -1,6 +1,11 @@
 import {
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonInteraction,
+    ButtonStyle,
     CommandInteraction,
     CommandInteractionOptionResolver,
+    ComponentType,
     EmbedBuilder,
     Message,
     MessageFlags,
@@ -41,6 +46,10 @@ const prune: SlashCommand = {
                 .options as CommandInteractionOptionResolver;
             const amount = options.getInteger('amount', true);
             const messages = await channel.messages.fetch({ limit: amount });
+            if (messages.size === 0) {
+                await interaction.editReply('No messages to delete.');
+                return;
+            }
             let authorId = '';
             const embeds: EmbedBuilder[] = [];
             for (const messageEntry of messages.reverse()) {
@@ -74,18 +83,71 @@ const prune: SlashCommand = {
 
                 messageEmbed.setDescription(messageContent);
             }
-            const deletedMessages = await channel.bulkDelete(messages, true);
-            await interaction.editReply(
-                `Deleted ${deletedMessages.size} messages.`,
+
+            const cancelButton = new ButtonBuilder()
+                .setCustomId('cancel')
+                .setLabel('Cancel')
+                .setStyle(ButtonStyle.Secondary);
+            const confirmButton = new ButtonBuilder()
+                .setCustomId('confirm')
+                .setLabel('Confirm Delete')
+                .setStyle(ButtonStyle.Danger);
+            const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+                confirmButton,
+                cancelButton,
             );
-            if (embeds.length > 0) {
-                const trashChannel = interaction.client.channels.cache.get(
-                    trashId,
-                ) as TextChannel;
-                await trashChannel.send({
-                    content: `Deleted ${messages.size} messages in ${channel}`,
-                    embeds: embeds,
+            const confirmMessage = await interaction.editReply({
+                content:
+                    `Are you sure you want to delete ${messages.size} messages? Oldest message to delete: ${
+                        messages.last()!.url
+                    }`,
+                components: [row],
+            });
+
+            try {
+                const collectorFilter = (i: ButtonInteraction) =>
+                    i.user.id === interaction.user.id;
+                const confirmation = await confirmMessage.awaitMessageComponent(
+                    {
+                        filter: collectorFilter,
+                        componentType: ComponentType.Button,
+                        time: 45_000,
+                    },
+                );
+                if (confirmation.customId === 'cancel') {
+                    await confirmation.update({
+                        content: 'Prune cancelled',
+                        components: [],
+                    });
+                    return;
+                }
+                await confirmation.update({
+                    content: 'Deleting messages...',
+                    components: [],
                 });
+                const deletedMessages = await channel.bulkDelete(
+                    messages,
+                    true,
+                );
+                await interaction.editReply(
+                    `Deleted ${deletedMessages.size} messages.`,
+                );
+                if (embeds.length > 0) {
+                    const trashChannel = interaction.client.channels.cache.get(
+                        trashId,
+                    ) as TextChannel;
+                    await trashChannel.send({
+                        content:
+                            `Deleted ${messages.size} messages in ${channel}`,
+                        embeds: embeds,
+                    });
+                }
+            } catch {
+                await interaction.editReply({
+                    content: 'Confirmation timed out',
+                    components: [],
+                });
+                return;
             }
         } catch (error) {
             console.error(new Date(), 'prune');
