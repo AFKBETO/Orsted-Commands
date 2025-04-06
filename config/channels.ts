@@ -12,3 +12,4 @@ export const privateId = '819209123723608105';
 export const logsId = '834783813015175178';
 export const councilId = '1142811387056377906';
 export const spoilerId = '1156303744670105661';
+export const trashId = '909426261204533328';
