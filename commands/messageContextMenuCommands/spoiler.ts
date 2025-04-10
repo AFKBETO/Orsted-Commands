@@ -7,10 +7,16 @@ import {
     PermissionFlagsBits,
     spoiler as spoilerify,
 } from 'discord.js';
-import { MessageContextMenuCommand } from '@orsted/utils';
+import { MessageContextMenuCommand, Utils } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
 import { fetchFile } from '../../utils/fetchFile.ts';
-import { isValidURL } from '../../utils/isValidURL.ts';
+
+/**
+ * Context menu command to spoiler a message
+ * This command will send a message to the channel with the content of the original message
+ * and delete the original message
+ * This command is only available to users with the Manage Messages permission
+ */
 
 const spoiler: MessageContextMenuCommand = {
     data: new ContextMenuCommandBuilder().setName(setCommandName('spoiler'))
@@ -21,7 +27,7 @@ const spoiler: MessageContextMenuCommand = {
         try {
             await interaction.deferReply();
             const targetMessage = interaction.targetMessage;
-            const isURL = isValidURL(targetMessage.content);
+            const isURL = Utils.isValidURL(targetMessage.content);
             const spoilerContent = targetMessage.content.length > 0
                 ? spoilerify(targetMessage.content)
                 : '';
