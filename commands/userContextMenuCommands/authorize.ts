@@ -11,7 +11,6 @@ import {
 } from 'discord.js';
 import { setCommandName } from '../../utils/setCommandName.ts';
 import { config } from '../../config/config.ts';
-import { botDevId, generalId } from '../../config/channels.ts';
 
 const authorize: UserContextMenuCommand = {
     data: new ContextMenuCommandBuilder()
@@ -32,7 +31,7 @@ const authorize: UserContextMenuCommand = {
                 );
                 return;
             }
-
+            const { generalId, botDevId } = interaction.client.botConfig;
             const channelId = config.environment === 'production'
                 ? generalId
                 : botDevId;

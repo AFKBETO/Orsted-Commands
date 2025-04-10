@@ -15,7 +15,12 @@ import {
 } from 'discord.js';
 import { SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
-import { trashId } from '../../config/channels.ts';
+
+/**
+ * Slash command to delete messages in bulk
+ * This command is only available to users with the Manage Messages permission.
+ * Can delete up to 100 messages at a time.
+ */
 
 const prune: SlashCommand = {
     data: new SlashCommandBuilder()
@@ -134,7 +139,7 @@ const prune: SlashCommand = {
                 );
                 if (embeds.length > 0) {
                     const trashChannel = interaction.client.channels.cache.get(
-                        trashId,
+                        interaction.client.botConfig.trashId,
                     ) as TextChannel;
                     await trashChannel.send({
                         content:
