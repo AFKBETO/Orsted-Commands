@@ -1,0 +1,3 @@
+[submodule "commands/secretCommands"]
+	path = commands/secretCommands
+	url = https://github.com/AFKBETO/Orsted-SecretCommands.git
