@@ -24,25 +24,25 @@ function getCommentOnMatchValue(value: number): string {
 
 
 async function getMatchDataBetweenTwoNames(
-	name1: string,
-	name2: string,
+    name1: string,
+    name2: string,
 ): Promise<string> {
-	const matchData = await getMatchData(name1, name2);
+    const matchData = await getMatchData(name1, name2);
     if ((Date.now() - matchData.timestamp) / 1000 > EXP_TIME) {
         matchData.value = Math.floor(Math.random() * 101);
         matchData.timestamp = Date.now();
         await matchData.save();
-	}
-	return `The compatibility of ${name1} and ${name2} is ${matchData.value}%. ${
-		getCommentOnMatchValue(matchData.value)
-	}`;
+    }
+    return `The compatibility of ${name1} and ${name2} is ${matchData.value}%. ${
+        getCommentOnMatchValue(matchData.value)
+    }`;
 }
 
 /**
  * Slash command to check compatibility between two users
  * If the second user is not provided, a random name will be used
  * Assign a random value to the compatibility, and will reuse this value if this command is used again within a day
-*/
+ */
 
 const match: SlashCommand = {
     data: new SlashCommandBuilder().setName(setCommandName('match'))
@@ -79,10 +79,16 @@ const match: SlashCommand = {
                 while (shippedTarget === 'Orsted') {
                     shippedTarget = randomName();
                 }
-				const message = await getMatchDataBetweenTwoNames(target1.id, shippedTarget);
+                const message = await getMatchDataBetweenTwoNames(
+                    target1.id,
+                    shippedTarget,
+                );
                 msgEmbed.setDescription(message);
             } else {
-				const message = await getMatchDataBetweenTwoNames(target1.id, target2.id);
+                const message = await getMatchDataBetweenTwoNames(
+                    target1.id,
+                    target2.id,
+                );
                 msgEmbed.setDescription(message);
             }
             await interaction.editReply({ embeds: [msgEmbed] });
