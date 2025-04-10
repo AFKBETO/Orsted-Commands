@@ -14,7 +14,6 @@ import { config } from '../../config/config.ts';
 import { botDevId, generalId } from '../../config/channels.ts';
 
 const authorize: UserContextMenuCommand = {
-    type: 'USERCONTEXT',
     data: new ContextMenuCommandBuilder()
         .setName(setCommandName('authorize'))
         .setType(ApplicationCommandType.User)
