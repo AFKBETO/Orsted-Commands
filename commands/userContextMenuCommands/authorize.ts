@@ -22,7 +22,7 @@ const authorize: UserContextMenuCommand = {
             await interaction.deferReply({ flags: MessageFlags.Ephemeral });
             const target = interaction.targetMember as GuildMember;
             const authorizeRole = interaction.guild?.roles.cache.find((role) =>
-                role.name === 'Sauce Connoisseurs'
+                role.name === interaction.client.botConfig.authorizeRole
             ) as Role;
 
             if (target.roles.cache.has(authorizeRole.id)) {
