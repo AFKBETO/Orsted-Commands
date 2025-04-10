@@ -24,7 +24,9 @@ for (const folder of commandFolders) {
         continue;
     }
     if (folder.name.startsWith('_')) {
-		console.info(`Skipping ${folder.name} as it starts with an underscore.`);
+        console.info(
+            `Skipping ${folder.name} as it starts with an underscore.`,
+        );
         continue;
     }
     const commandsPath = path.join(foldersPath, folder.name);
@@ -40,10 +42,12 @@ for (const folder of commandFolders) {
             );
             continue;
         }
-		if (file.name.startsWith('_')) {
-			console.info(`Skipping ${file.name} as it starts with an underscore.`);
-			continue;
-		}
+        if (file.name.startsWith('_')) {
+            console.info(
+                `Skipping ${file.name} as it starts with an underscore.`,
+            );
+            continue;
+        }
         const filePath = path.join(commandsPath, file.name);
         const fileUrl = path.toFileUrl(filePath);
         const command = (await import(fileUrl.toString())).default;
@@ -61,15 +65,20 @@ for (const folder of commandFolders) {
         }
     }
 }
-const simpleCommandsPath = path.join(foldersPath, 'secretCommands/_simpleCmds.ts');
-const isSimpleCommandsExist = await exists(simpleCommandsPath, {isFile: true});
+const simpleCommandsPath = path.join(
+    foldersPath,
+    'secretCommands/_simpleCmds.ts',
+);
+const isSimpleCommandsExist = await exists(simpleCommandsPath, {
+    isFile: true,
+});
 if (isSimpleCommandsExist) {
-	console.log('Loading simple commands...');
+    console.log('Loading simple commands...');
     const simpleCommands =
         (await import('./commands/secretCommands/_simpleCmds.ts')).default;
     for (const command of simpleCommands) {
         slashCommands.set(command.data.name, command);
-		console.log(`${command.data.name} loaded`);
+        console.log(`${command.data.name} loaded`);
     }
 }
 
