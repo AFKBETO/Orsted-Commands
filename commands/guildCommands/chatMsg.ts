@@ -31,10 +31,7 @@ const chatMsg: SlashCommand = {
         .setDefaultMemberPermissions(0) as SlashCommandBuilder,
     execute: async (interaction: CommandInteraction) => {
         try {
-            await interaction.reply({
-                flags: MessageFlags.Ephemeral,
-                content: 'The message has been sent.',
-            });
+            await interaction.deferReply({ flags: MessageFlags.Ephemeral });
             const message =
                 (interaction.options as CommandInteractionOptionResolver)
                     .getString('message', true);
@@ -54,6 +51,9 @@ const chatMsg: SlashCommand = {
             } else {
                 await channel.send(message);
             }
+            await interaction.editReply({
+                content: 'The message has been sent.',
+            });
         } catch (error) {
             console.error(new Date(), 'chat');
             console.error(error);
