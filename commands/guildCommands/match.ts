@@ -6,7 +6,6 @@ import {
 } from 'discord.js';
 import { getMatchData, SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
-import { randomName } from '../../utils/randomName.ts';
 
 const EXP_TIME = 86400;
 
@@ -64,6 +63,7 @@ const match: SlashCommand = {
         try {
             await interaction.deferReply();
             const { user } = interaction;
+            const { randomName } = interaction.client;
             const options = interaction
                 .options as CommandInteractionOptionResolver;
             const target1 = options.getUser('target1', true);
@@ -75,9 +75,9 @@ const match: SlashCommand = {
                     iconURL: user.displayAvatarURL(),
                 });
             if (target2 === null || target1.id === target2.id) {
-                shippedTarget = randomName();
+                shippedTarget = randomName.get();
                 while (shippedTarget === 'Orsted') {
-                    shippedTarget = randomName();
+                    shippedTarget = randomName.get();
                 }
                 const message = await getMatchDataBetweenTwoNames(
                     target1.id,

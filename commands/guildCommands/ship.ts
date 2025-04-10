@@ -5,8 +5,6 @@ import {
 } from 'discord.js';
 import { SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
-import { randomName } from '../../utils/randomName.ts';
-
 const ship: SlashCommand = {
     data: new SlashCommandBuilder()
         .setName(setCommandName('ship'))
@@ -28,6 +26,8 @@ const ship: SlashCommand = {
             const options = interaction
                 .options as CommandInteractionOptionResolver;
 
+            const { randomName } = interaction.client;
+
             let target1 = options.getUser('target1', true);
             const target2 = options.getUser('target2');
             let shippedTarget = '';
@@ -35,7 +35,7 @@ const ship: SlashCommand = {
                 target1.id === interaction.client.user.id ||
                 (target2 && target2.id === interaction.client.user.id)
             ) {
-                shippedTarget = randomName('male');
+                shippedTarget = randomName.get('male');
                 target1 = interaction.user;
                 await interaction.editReply(
                     `${interaction.client.user} has shipped ${target1} with ${shippedTarget} for trying to ship with ${interaction.client.user.displayName}!`,
@@ -43,7 +43,7 @@ const ship: SlashCommand = {
                 return;
             }
             if (!target2 || target2.id === target1.id) {
-                shippedTarget = randomName();
+                shippedTarget = randomName.get();
                 await interaction.editReply(
                     `${interaction.user} has shipped ${target1} with ${shippedTarget}!`,
                 );
