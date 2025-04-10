@@ -12,6 +12,12 @@ import {
 import { setCommandName } from '../../utils/setCommandName.ts';
 import { config } from '../../config/config.ts';
 
+/**
+ * User context menu command to authorize a user
+ * This command will add the authorize role to the user
+ * This command is only available to users with the Manage Roles permission
+ */
+
 const authorize: UserContextMenuCommand = {
     data: new ContextMenuCommandBuilder()
         .setName(setCommandName('authorize'))

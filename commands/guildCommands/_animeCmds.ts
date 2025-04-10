@@ -5,6 +5,11 @@ import { setCommandName } from '../../utils/setCommandName.ts';
 const WEEK_TIME = 60 * 60 * 24 * 7;
 const HOUR_TIME_IN_MS = 1000 * 60 * 60;
 
+/**
+ * Generates a list of slash commands for the given anime list stored in the MongoDB database
+ * This command will fetch the next episode of the anime from livechart.me, if it is still airing
+ */
+
 export function generateAnimeCommands(animeList: AnimeInt[]): SlashCommand[] {
     const result: SlashCommand[] = [];
 

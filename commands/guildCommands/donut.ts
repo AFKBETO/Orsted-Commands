@@ -15,6 +15,10 @@ const donutId = '815600544873578526';
 const donutImage =
     'https://media.discordapp.net/attachments/814170478566178879/832430180676272148/latest.png?width=352&height=503';
 
+/**
+ * Joke command to donut a user, temporarily timing them out
+ */
+
 const donut: SlashCommand = {
     data: new SlashCommandBuilder()
         .setName(setCommandName('donut'))

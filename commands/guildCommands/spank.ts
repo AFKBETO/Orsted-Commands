@@ -16,10 +16,20 @@ const randSpank = [
     'https://c.tenor.com/gScnebhgJn4AAAAC/taritari-anime-spank.gif',
 ];
 
+/**
+ * Memory for the last spank gif used
+ * This is used to prevent the same gif from being used multiple times in a row
+ * This is not persistent and will be reset when the bot restarts
+ */
 const memorySpank = {
     oldSpank: '',
     spankCount: 0,
 };
+
+/**
+ * Slash command to spank a user
+ * This will send a message to the channel with a random spank gif
+ */
 
 const spank: SlashCommand = {
     data: new SlashCommandBuilder()

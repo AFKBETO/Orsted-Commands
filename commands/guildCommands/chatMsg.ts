@@ -8,6 +8,10 @@ import { SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
 import { CommandInteraction } from 'discord.js';
 
+/**
+ * Sends a message as the bot in the channel where the command was executed.
+ */
+
 const chatMsg: SlashCommand = {
     cooldown: 5,
     data: new SlashCommandBuilder()

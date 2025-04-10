@@ -8,6 +8,10 @@ const wholesomeUrl = [
     'https://media.discordapp.net/attachments/824175906120663060/843465128644313108/20210511_104844.png?width=952&height=504',
 ];
 
+/**
+ * Slash command to post a wholesome kiss
+ */
+
 const wholesomeKiss: BotCommand = {
     data: new SlashCommandBuilder()
         .setName(setCommandName('wholesomekiss'))

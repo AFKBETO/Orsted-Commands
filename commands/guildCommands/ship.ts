@@ -5,6 +5,10 @@ import {
 } from 'discord.js';
 import { SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
+/**
+ * Slash command to ship two users together
+ * If one of the users is invalid (same user, bot, etc.) or not provided, a random name will be used
+ */
 const ship: SlashCommand = {
     data: new SlashCommandBuilder()
         .setName(setCommandName('ship'))

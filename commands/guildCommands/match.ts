@@ -21,6 +21,13 @@ function getCommentOnMatchValue(value: number): string {
     return 'Congratulation!';
 }
 
+/**
+ * Get match data between two names
+ * If the data is expired, assign a random value to it
+ * @param name1 First name
+ * @param name2 Second name
+ * @returns Match data
+ */
 
 async function getMatchDataBetweenTwoNames(
     name1: string,
