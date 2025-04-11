@@ -52,12 +52,13 @@ function verifyChanges(oldConfig: ConfigData, newConfig: ConfigData): boolean {
     return false;
 }
 
+let newConfig: ConfigData;
+
 async function onButtonInteraction(
     buttonInteraction: ButtonInteraction,
 ): Promise<boolean> {
     try {
         const { botConfig } = buttonInteraction.client;
-        let newConfig = { ...botConfig };
         if (buttonInteraction.customId === 'confirm') {
             if (!verifyChanges(botConfig, newConfig)) {
                 await buttonInteraction.reply({
@@ -209,6 +210,7 @@ const changeConfig: SlashCommand = {
                 componentType: ComponentType.Button,
                 time: CONFIG_TIMEOUT,
             });
+            newConfig = { ...interaction.client.botConfig };
             collector.on(
                 'collect',
                 async (buttonInteraction: ButtonInteraction) => {
