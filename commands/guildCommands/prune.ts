@@ -34,6 +34,14 @@ const prune: SlashCommand = {
                 .setMinValue(1)
                 .setMaxValue(100)
         )
+        .addBooleanOption((option) =>
+            option
+                .setName('deep')
+                .setDescription(
+                    'Delete messages older than 14 days (this will take more time)',
+                )
+                .setRequired(false)
+        )
         .setDefaultMemberPermissions(
             PermissionFlagsBits.ManageMessages,
         ) as SlashCommandBuilder,
@@ -50,7 +58,11 @@ const prune: SlashCommand = {
             const options = interaction
                 .options as CommandInteractionOptionResolver;
             const amount = options.getInteger('amount', true);
-            const messages = await channel.messages.fetch({ limit: amount });
+            const isDeepPrune = options.getBoolean('deep', false) ?? false;
+            const messages = await channel.messages.fetch({
+                limit: amount,
+                cache: false,
+            });
             if (messages.size === 0) {
                 await interaction.editReply('No messages to delete.');
                 return;
@@ -116,7 +128,7 @@ const prune: SlashCommand = {
                     {
                         filter: collectorFilter,
                         componentType: ComponentType.Button,
-                        time: 45_000,
+                        time: isDeepPrune ? 120_000 : 45_000,
                     },
                 );
                 if (confirmation.customId === 'cancel') {
@@ -130,12 +142,23 @@ const prune: SlashCommand = {
                     content: 'Deleting messages...',
                     components: [],
                 });
-                const deletedMessages = await channel.bulkDelete(
-                    messages,
-                    true,
-                );
+
+                let deleteCount = 0;
+                if (isDeepPrune) {
+                    for (const messageEntry of messages) {
+                        const message = messageEntry[1] as Message;
+                        if (message.flags.has(MessageFlags.Ephemeral)) {
+                            continue;
+                        }
+                        deleteCount++;
+                        await message.delete();
+                    }
+                } else {
+                    await channel.bulkDelete(messages, true);
+                    deleteCount = messages.size;
+                }
                 await interaction.editReply(
-                    `Deleted ${deletedMessages.size} messages.`,
+                    `Deleted ${deleteCount} messages.`,
                 );
                 if (embeds.length > 0) {
                     const trashChannel = interaction.client.channels.cache.get(
@@ -147,6 +170,7 @@ const prune: SlashCommand = {
                         embeds: embeds,
                     });
                 }
+                return;
             } catch {
                 await interaction.editReply({
                     content: 'Confirmation timed out',
