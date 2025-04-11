@@ -11,9 +11,6 @@ import {
 import { SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
 
-const donutImage =
-    'https://media.discordapp.net/attachments/814170478566178879/832430180676272148/latest.png?width=352&height=503';
-
 /**
  * Joke command to donut a user, temporarily timing them out
  */
@@ -89,6 +86,8 @@ const donut: SlashCommand = {
                     await interaction.followUp({ embeds: [msgEmbed2] });
                 }, time * 1000);
             } else {
+                const donutImage = interaction.client.images.get('donut')!
+                    .randomItem();
                 msgEmbed.setDescription(`${target} has been spared!`).setImage(
                     donutImage,
                 );

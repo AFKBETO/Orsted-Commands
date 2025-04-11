@@ -9,13 +9,6 @@ import {
 import { SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
 
-const randSpank = [
-    'https://c.tenor.com/4RIbgFCLRrUAAAAC/rikka-takanashi-bad-girl.gif',
-    'https://c.tenor.com/WNnO4lxUMVQAAAAC/anime-school-girl.gif',
-    'https://c.tenor.com/5ropePOLZV4AAAAC/bad-beat.gif',
-    'https://c.tenor.com/gScnebhgJn4AAAAC/taritari-anime-spank.gif',
-];
-
 /**
  * Memory for the last spank gif used
  * This is used to prevent the same gif from being used multiple times in a row
@@ -48,6 +41,7 @@ const spank: SlashCommand = {
             const options = interaction
                 .options as CommandInteractionOptionResolver;
             const target = options.getMember('target') as GuildMember;
+            const randSpank = interaction.client.images.get('spank')!;
 
             let spankUrl = memorySpank.oldSpank;
             while (spankUrl === memorySpank.oldSpank) {
