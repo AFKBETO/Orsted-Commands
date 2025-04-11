@@ -188,7 +188,6 @@ const changeConfig: SlashCommand = {
             row.addComponents(confirmButton).addComponents(resetButton);
             const components: ActionRowBuilder<ButtonBuilder>[] = [row];
 
-            console.log('configurableFieldsGroups', configurableFieldsGroups);
             // Add buttons for each group of configurable fields
             for (const group of configurableFieldsGroups.keys()) {
                 if (row.components.length >= 5) {
