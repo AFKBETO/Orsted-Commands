@@ -7,6 +7,7 @@ import {
 import { SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
 import { CommandInteraction } from 'discord.js';
+import { setTimeout } from 'node:timers/promises';
 
 /**
  * Sends a message as the bot in the channel where the command was executed.
@@ -32,13 +33,19 @@ const chatMsg: SlashCommand = {
     execute: async (interaction: CommandInteraction) => {
         try {
             await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+            const channel = await interaction.channel?.fetch() as TextChannel;
+            await channel.sendTyping();
             const message =
                 (interaction.options as CommandInteractionOptionResolver)
                     .getString('message', true);
             const quoteId =
                 (interaction.options as CommandInteractionOptionResolver)
                     .getString('quoteid', false);
-            const channel = await interaction.channel?.fetch() as TextChannel;
+            const timeout = Math.min(
+                message.length * 150 + Math.random() * 1000,
+                10_000,
+            );
+            await setTimeout(timeout);
             if (quoteId) {
                 const quoteMessage = await interaction.channel?.messages.fetch(
                     quoteId,
