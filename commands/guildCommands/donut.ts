@@ -11,7 +11,6 @@ import {
 import { SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
 
-const donutId = '815600544873578526';
 const donutImage =
     'https://media.discordapp.net/attachments/814170478566178879/832430180676272148/latest.png?width=352&height=503';
 
@@ -45,6 +44,7 @@ const donut: SlashCommand = {
     execute: async (interaction) => {
         try {
             await interaction.deferReply();
+            const { donutId } = interaction.client.botConfig;
             const donutRole = interaction.guild?.roles.cache.get(
                 donutId,
             ) as RoleResolvable;
