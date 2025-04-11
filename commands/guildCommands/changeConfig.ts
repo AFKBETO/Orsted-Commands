@@ -103,18 +103,19 @@ async function onButtonInteraction(
                     buttonInteraction.customId,
                 )!
             ) {
-                let value = '';
-                if (Array.isArray(newConfig[field])) {
-                    value = newConfig[field].join(', ');
-                } else {
-                    value = newConfig[field];
-                }
                 const textInput = new TextInputBuilder()
                     .setCustomId(field)
                     .setLabel(field)
-                    .setStyle(TextInputStyle.Short)
-                    .setValue(value)
                     .setRequired(true);
+                let value = '';
+                if (Array.isArray(newConfig[field])) {
+                    textInput.setStyle(TextInputStyle.Paragraph);
+                    value = newConfig[field].join(', ');
+                } else {
+                    textInput.setStyle(TextInputStyle.Short);
+                    value = newConfig[field];
+                }
+                textInput.setValue(value);
                 const row = new ActionRowBuilder<TextInputBuilder>()
                     .addComponents(textInput);
                 modal.addComponents(row);
