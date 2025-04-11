@@ -12,8 +12,6 @@ import { createHosData, SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
 import { fetchFile } from '../../utils/fetchFile.ts';
 
-const shameReactIcon = '814457607720796212';
-
 /**
  * Slash command to shame a user
  * This will send a message to the Hall of Shame channel, with a screenshot and a comment
@@ -34,7 +32,8 @@ const shame: SlashCommand = {
         ) as SlashCommandBuilder,
     execute: async (interaction: CommandInteraction) => {
         try {
-            const { databaseId, shameId } = interaction.client.botConfig;
+            const { databaseId, shameId, shameReactIconId } =
+                interaction.client.botConfig;
             await interaction.deferReply({ flags: MessageFlags.Ephemeral });
             const { user } = interaction;
             const options = interaction
@@ -70,7 +69,7 @@ const shame: SlashCommand = {
                 .setDescription(comment);
 
             const reply = await shameChannel.send({ embeds: [msgEmbed] });
-            await reply.react(shameReactIcon);
+            await reply.react(shameReactIconId);
             await createHosData({
                 id: reply.id,
                 fromId: user.id,
