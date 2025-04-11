@@ -25,7 +25,9 @@ import { setCommandName } from '../../utils/setCommandName.ts';
 const prune: SlashCommand = {
     data: new SlashCommandBuilder()
         .setName(setCommandName('prune'))
-        .setDescription('Delete messages in bulk')
+        .setDescription(
+            'Delete messages in bulk. Shallow prune by default (up to 14 days old).',
+        )
         .addIntegerOption((option) =>
             option
                 .setName('amount')
@@ -116,7 +118,7 @@ const prune: SlashCommand = {
             const confirmMessage = await interaction.editReply({
                 content:
                     `Are you sure you want to delete ${messages.size} messages? Oldest message to delete: ${
-                        messages.last()!.url
+                        messages.first()!.url
                     }`,
                 components: [row],
             });
