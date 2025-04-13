@@ -31,14 +31,12 @@ const spoiler: MessageContextMenuCommand = {
                 ? spoilerify(targetMessage.content)
                 : '';
             const author = targetMessage.author;
-            const files: AttachmentBuilder[] = [];
-            for (const attachment of targetMessage.attachments) {
-                files.push(
-                    new AttachmentBuilder(attachment[1].url)
-                        .setName(attachment[1].name)
+            const files = targetMessage.attachments.map(
+                (attachment) =>
+                    new AttachmentBuilder(attachment.url)
+                        .setName(attachment.name)
                         .setSpoiler(true),
-                );
-            }
+            );
             const embeds: EmbedBuilder[] = [];
             if (targetMessage.content.length > 0 && !isURL) {
                 embeds.push(
