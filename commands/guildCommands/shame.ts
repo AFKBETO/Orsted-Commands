@@ -10,7 +10,6 @@ import {
 } from 'discord.js';
 import { createHosData, SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
-import { fetchFile } from '../../utils/fetchFile.ts';
 
 /**
  * Slash command to shame a user
@@ -51,10 +50,8 @@ const shame: SlashCommand = {
                 databaseId,
             ) as TextChannel;
 
-            const fileBuffer = await fetchFile(attachmentUrl);
-            const attachment = new AttachmentBuilder(fileBuffer).setName(
-                'shame.png',
-            );
+            const attachment = new AttachmentBuilder(attachmentUrl)
+                .setName('shame.png');
 
             const imageUrl = (await dbChannel.send({
                 files: [attachment],

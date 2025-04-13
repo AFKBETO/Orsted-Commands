@@ -9,7 +9,6 @@ import {
 } from 'discord.js';
 import { MessageContextMenuCommand, Utils } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
-import { fetchFile } from '../../utils/fetchFile.ts';
 
 /**
  * Context menu command to spoiler a message
@@ -34,9 +33,9 @@ const spoiler: MessageContextMenuCommand = {
             const author = targetMessage.author;
             const files: AttachmentBuilder[] = [];
             for (const attachment of targetMessage.attachments) {
-                const file = await fetchFile(attachment[1].url);
                 files.push(
-                    new AttachmentBuilder(file).setName(attachment[1].name)
+                    new AttachmentBuilder(attachment[1].url)
+                        .setName(attachment[1].name)
                         .setSpoiler(true),
                 );
             }
