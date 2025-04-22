@@ -38,7 +38,10 @@ const configurableFieldsGroups = getConfigurableFieldsGroups();
 
 function verifyChanges(oldConfig: ConfigData, newConfig: ConfigData): boolean {
     for (const field of configurableFields) {
-        if (field === 'maleNames' || field === 'femaleNames') {
+        if (
+            field === 'maleNames' || field === 'femaleNames' ||
+            field === 'twitterEmbedLinks'
+        ) {
             if (
                 JSON.stringify(oldConfig[field]) !==
                     JSON.stringify(newConfig[field])
@@ -136,7 +139,10 @@ async function onButtonInteraction(
                     )!
                 ) {
                     const value = input.fields.getTextInputValue(field);
-                    if (field === 'maleNames' || field === 'femaleNames') {
+                    if (
+                        field === 'maleNames' || field === 'femaleNames' ||
+                        field === 'twitterEmbedLinks'
+                    ) {
                         newConfig[field] = value.split(',').map((name) =>
                             name.trim()
                         );
