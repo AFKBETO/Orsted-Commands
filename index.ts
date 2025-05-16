@@ -1,20 +1,10 @@
 import * as path from '@std/path';
 import { exists } from '@std/fs/exists';
-import {
-    MessageContextMenuCommand,
-    SlashCommand,
-    UserContextMenuCommand,
-    Utils,
-} from '@orsted/utils';
+import { BotCommand, Utils } from '@orsted/utils';
 import { Collection } from 'discord.js';
 import { generateAnimeCommands } from './commands/guildCommands/_animeCmds.ts';
 
-const slashCommands = new Collection<string, SlashCommand>();
-const messageContextCommands = new Collection<
-    string,
-    MessageContextMenuCommand
->();
-const userContextCommands = new Collection<string, UserContextMenuCommand>();
+const commands = new Collection<string, BotCommand>();
 const foldersPath = path.join(import.meta.dirname || '.', 'commands');
 const commandFolders = Deno.readDirSync(foldersPath);
 
@@ -52,11 +42,11 @@ for (const folder of commandFolders) {
         const command = (await import(fileUrl.toString())).default;
 
         if (Utils.isSlashCommand(command)) {
-            slashCommands.set(command.data.name, command);
+            commands.set(command.data.name, command);
         } else if (Utils.isUserContextMenuCommand(command)) {
-            userContextCommands.set(command.data.name, command);
+            commands.set(command.data.name, command);
         } else if (Utils.isMessageContextMenuCommand(command)) {
-            messageContextCommands.set(command.data.name, command);
+            commands.set(command.data.name, command);
         } else {
             console.info(
                 `Skipping ${file.name} as it does not implement BotCommand: Missing required "data" or "execute" properties.`,
@@ -76,14 +66,9 @@ if (isSimpleCommandsExist) {
     const simpleCommands =
         (await import('./commands/secretCommands/_simpleCmds.ts')).default;
     for (const command of simpleCommands) {
-        slashCommands.set(command.data.name, command);
+        commands.set(command.data.name, command);
         console.log(`${command.data.name} loaded`);
     }
 }
 
-export {
-    generateAnimeCommands,
-    messageContextCommands,
-    slashCommands,
-    userContextCommands,
-};
+export { commands, generateAnimeCommands };
