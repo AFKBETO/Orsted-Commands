@@ -1,5 +1,5 @@
 import {
-    CommandInteraction,
+    ChatInputCommandInteraction,
     CommandInteractionOptionResolver,
     SlashCommandBuilder,
 } from 'discord.js';
@@ -24,7 +24,7 @@ const ship: SlashCommand = {
                 .setName('target2')
                 .setDescription('Select a second user to ship')
         ) as SlashCommandBuilder,
-    execute: async (interaction: CommandInteraction) => {
+    execute: async (interaction: ChatInputCommandInteraction) => {
         try {
             await interaction.deferReply();
             const options = interaction

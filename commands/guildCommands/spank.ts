@@ -1,5 +1,5 @@
 import {
-    CommandInteraction,
+    ChatInputCommandInteraction,
     CommandInteractionOptionResolver,
     EmbedBuilder,
     GuildMember,
@@ -34,7 +34,7 @@ const spank: SlashCommand = {
                 .setDescription('Select a target')
                 .setRequired(true)
         ) as SlashCommandBuilder,
-    execute: async (interaction: CommandInteraction) => {
+    execute: async (interaction: ChatInputCommandInteraction) => {
         try {
             await interaction.deferReply();
             const { user } = interaction;

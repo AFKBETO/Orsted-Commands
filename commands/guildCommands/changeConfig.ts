@@ -3,8 +3,8 @@ import {
     ButtonBuilder,
     ButtonInteraction,
     ButtonStyle,
+    ChatInputCommandInteraction,
     Collection,
-    CommandInteraction,
     ComponentType,
     MessageFlags,
     ModalBuilder,
@@ -179,7 +179,7 @@ const changeConfig: SlashCommand = {
         .setName(setCommandName('changeconfig'))
         .setDescription('Change the config for the bot.')
         .setDefaultMemberPermissions(0),
-    execute: async (interaction: CommandInteraction) => {
+    execute: async (interaction: ChatInputCommandInteraction) => {
         try {
             await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 

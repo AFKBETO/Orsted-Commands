@@ -1,4 +1,5 @@
 import {
+    ChatInputCommandInteraction,
     CommandInteractionOptionResolver,
     MessageFlags,
     SlashCommandBuilder,
@@ -6,7 +7,6 @@ import {
 } from 'discord.js';
 import { SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
-import { CommandInteraction } from 'discord.js';
 import { setTimeout } from 'node:timers/promises';
 
 /**
@@ -30,7 +30,7 @@ const chatMsg: SlashCommand = {
                 .setDescription('The ID of the message to quote.')
         )
         .setDefaultMemberPermissions(0) as SlashCommandBuilder,
-    execute: async (interaction: CommandInteraction) => {
+    execute: async (interaction: ChatInputCommandInteraction) => {
         try {
             await interaction.deferReply({ flags: MessageFlags.Ephemeral });
             const channel = await interaction.channel?.fetch() as TextChannel;

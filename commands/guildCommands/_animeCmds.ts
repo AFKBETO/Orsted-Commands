@@ -1,4 +1,4 @@
-import { CommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 import { AnimeInt, SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
 
@@ -18,7 +18,7 @@ export function generateAnimeCommands(animeList: AnimeInt[]): SlashCommand[] {
             data: new SlashCommandBuilder()
                 .setName(setCommandName(anime.commandName))
                 .setDescription(`Get the next episode of ${anime.name}`),
-            execute: async (interaction: CommandInteraction) => {
+            execute: async (interaction: ChatInputCommandInteraction) => {
                 try {
                     await interaction.deferReply();
 

@@ -1,5 +1,5 @@
 import {
-    CommandInteraction,
+    ChatInputCommandInteraction,
     CommandInteractionOptionResolver,
     EmbedBuilder,
     SlashCommandBuilder,
@@ -66,7 +66,7 @@ const match: SlashCommand = {
                 .setName('target2')
                 .setDescription('Select a second user to calculate match')
         ) as SlashCommandBuilder,
-    execute: async (interaction: CommandInteraction) => {
+    execute: async (interaction: ChatInputCommandInteraction) => {
         try {
             await interaction.deferReply();
             const { user } = interaction;

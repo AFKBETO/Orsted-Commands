@@ -3,7 +3,7 @@ import {
     ButtonBuilder,
     ButtonInteraction,
     ButtonStyle,
-    CommandInteraction,
+    ChatInputCommandInteraction,
     CommandInteractionOptionResolver,
     ComponentType,
     EmbedBuilder,
@@ -47,7 +47,7 @@ const prune: SlashCommand = {
         .setDefaultMemberPermissions(
             PermissionFlagsBits.ManageMessages,
         ) as SlashCommandBuilder,
-    execute: async (interaction: CommandInteraction) => {
+    execute: async (interaction: ChatInputCommandInteraction) => {
         try {
             await interaction.deferReply({ flags: MessageFlags.Ephemeral });
             const channel = interaction.channel as TextChannel;

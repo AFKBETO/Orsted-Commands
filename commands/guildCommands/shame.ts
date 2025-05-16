@@ -1,6 +1,6 @@
 import {
     AttachmentBuilder,
-    CommandInteraction,
+    ChatInputCommandInteraction,
     CommandInteractionOptionResolver,
     EmbedBuilder,
     GuildMember,
@@ -29,7 +29,7 @@ const shame: SlashCommand = {
         .addStringOption((option) =>
             option.setName('comment').setDescription('Comment on the shame')
         ) as SlashCommandBuilder,
-    execute: async (interaction: CommandInteraction) => {
+    execute: async (interaction: ChatInputCommandInteraction) => {
         try {
             const { databaseId, shameId, shameReactIconId } =
                 interaction.client.botConfig;

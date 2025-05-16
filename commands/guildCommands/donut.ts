@@ -1,4 +1,5 @@
 import {
+    ChatInputCommandInteraction,
     CommandInteractionOptionResolver,
     EmbedBuilder,
     GuildMember,
@@ -38,7 +39,7 @@ const donut: SlashCommand = {
             option.setName('sec').setDescription('Set the amount of seconds')
                 .setMaxValue(59).setMinValue(0)
         ) as SlashCommandBuilder,
-    execute: async (interaction) => {
+    execute: async (interaction: ChatInputCommandInteraction) => {
         try {
             await interaction.deferReply();
             const { donutId } = interaction.client.botConfig;
