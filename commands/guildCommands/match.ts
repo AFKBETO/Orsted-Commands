@@ -6,6 +6,7 @@ import {
 } from 'discord.js';
 import { getMatchData, SlashCommand } from '@orsted/utils';
 import { setCommandName } from '../../utils/setCommandName.ts';
+import { User } from 'discord.js';
 
 const EXP_TIME = 86400;
 
@@ -30,10 +31,11 @@ function getCommentOnMatchValue(value: number): string {
  */
 
 async function getMatchDataBetweenTwoNames(
-    name1: string,
-    name2: string,
+    name1: User,
+    name2: User | string,
 ): Promise<string> {
-    const matchData = await getMatchData(name1, name2);
+    const name2Id = typeof name2 === 'string' ? name2 : name2.id;
+    const matchData = await getMatchData(name1.id, name2Id);
     if ((Date.now() - matchData.timestamp) / 1000 > EXP_TIME) {
         matchData.value = Math.floor(Math.random() * 101);
         matchData.timestamp = Date.now();
@@ -87,14 +89,14 @@ const match: SlashCommand = {
                     shippedTarget = randomName.get();
                 }
                 const message = await getMatchDataBetweenTwoNames(
-                    target1.id,
+                    target1,
                     shippedTarget,
                 );
                 msgEmbed.setDescription(message);
             } else {
                 const message = await getMatchDataBetweenTwoNames(
-                    target1.id,
-                    target2.id,
+                    target1,
+                    target2,
                 );
                 msgEmbed.setDescription(message);
             }
